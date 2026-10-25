@@ -1,6 +1,3 @@
-<p>
-  You can reset your password on
-  <%= link_to "this password reset page", edit_password_url(@user.password_reset_token) %>.
-
-  This link will expire in <%= distance_of_time_in_words(0, @user.password_reset_token_expires_in) %>.
-</p>
+<p>ケアさがしのパスワード再設定の案内です。</p>
+<p><%= link_to "パスワードを再設定する", edit_password_url(@user.password_reset_token) %></p>
+<p>このリンクの有効期限は <%= (@user.password_reset_token_expires_in / 60).to_i %> 分です。心当たりがない場合は、このメールを破棄してください。</p>
