@@ -2,7 +2,7 @@ if ENV.fetch("COVERAGE", "1") == "1"
   require "simplecov"
   SimpleCov.start "rails" do
     enable_coverage :branch
-    add_filter %w[/spec/ /config/ /db/ /vendor/]
+    skip %w[/spec/ /config/ /db/ /vendor/]
     # app/ 配下の行カバレッジが 90% を下回ったら失敗させる
     minimum_coverage line: 90
   end
