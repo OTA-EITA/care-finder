@@ -1,0 +1,15 @@
+<% content_for :title, "お気に入り" %>
+
+<h1 class="text-xl font-bold">お気に入り</h1>
+<% if @facilities.empty? %>
+  <div class="card mt-4 text-sm text-stone-700">
+    <p>まだお気に入りはありません。</p>
+    <p class="mt-1">事業所のページで「お気に入りに追加」を押すと、ここに並びます。<%= link_to "事業所をさがす", facilities_path %></p>
+  </div>
+<% else %>
+  <div class="mt-4 grid gap-3">
+    <% @facilities.each do |facility| %>
+      <%= render "facilities/facility", facility: %>
+    <% end %>
+  </div>
+<% end %>

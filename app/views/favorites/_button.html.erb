@@ -1,0 +1,11 @@
+<%= turbo_frame_tag dom_id(facility, :favorite) do %>
+  <% if current_user&.favorited?(facility) %>
+    <%= button_to facility_favorite_path(facility), method: :delete, class: "btn-secondary", aria: { pressed: true } do %>
+      <span aria-hidden="true">★</span> お気に入りから外す
+    <% end %>
+  <% else %>
+    <%= button_to facility_favorite_path(facility), class: "btn-primary", data: { turbo_frame: current_user ? dom_id(facility, :favorite) : "_top" } do %>
+      <span aria-hidden="true">☆</span> お気に入りに追加
+    <% end %>
+  <% end %>
+<% end %>
