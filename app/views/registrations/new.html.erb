@@ -1,0 +1,25 @@
+<% content_for :title, "新規登録" %>
+
+<div class="mx-auto max-w-md">
+  <h1 class="text-xl font-bold">新規登録</h1>
+  <p class="mt-1 text-sm text-stone-600">登録すると、気になる事業所をお気に入りに保存できます。</p>
+
+  <%= form_with model: @user, url: registration_path, class: "card mt-4 space-y-4" do |f| %>
+    <%= render "shared/form_errors", record: @user %>
+    <div>
+      <%= f.label :email_address, class: "label" %>
+      <%= f.email_field :email_address, required: true, autocomplete: "email", class: "input" %>
+    </div>
+    <div>
+      <%= f.label :password, class: "label" %>
+      <%= f.password_field :password, required: true, autocomplete: "new-password", minlength: 12, class: "input" %>
+      <p class="mt-1 text-xs text-stone-500">12文字以上</p>
+    </div>
+    <div>
+      <%= f.label :password_confirmation, class: "label" %>
+      <%= f.password_field :password_confirmation, required: true, autocomplete: "new-password", class: "input" %>
+    </div>
+    <%= f.submit "登録する", class: "btn-primary w-full" %>
+  <% end %>
+  <p class="mt-4 text-sm">登録済みの方は<%= link_to "ログイン", new_session_path %></p>
+</div>
