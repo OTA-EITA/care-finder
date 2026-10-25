@@ -28,6 +28,10 @@ gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "solid_queue"
 gem "redis", "~> 5.4"
 
+# WAM NET のオープンデータ（ZIP 入り CSV）の取り込み
+gem "csv"
+gem "rubyzip", "~> 3.7", require: "zip"
+
 # One JSON line per request for CloudWatch Logs / Datadog
 gem "lograge"
 
