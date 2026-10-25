@@ -1,28 +1,60 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
   <head>
-    <title><%= content_for(:title) || "Care Finder" %></title>
+    <title><%= content_for?(:title) ? "#{yield(:title)} | ケアさがし" : "ケアさがし | 放課後等デイサービス・児童発達支援をさがす" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Care Finder">
-    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="description" content="障害のあるお子さん向けの放課後等デイサービス・児童発達支援を、地域・曜日・送迎・支援内容でさがせます。">
+    <meta name="application-name" content="ケアさがし">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= yield :head %>
-
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
 
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
   </head>
 
-  <body>
-    <%= yield %>
+  <body class="flex min-h-screen flex-col">
+    <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:rounded focus:bg-white focus:px-3 focus:py-2">本文へ移動</a>
+
+    <header class="border-b border-stone-200 bg-white">
+      <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-3">
+        <%= link_to root_path, class: "flex items-baseline gap-2 text-stone-900 no-underline hover:no-underline" do %>
+          <span class="text-lg font-bold tracking-wide">ケアさがし</span>
+          <span class="hidden text-xs text-stone-500 sm:inline">放課後等デイサービス・児童発達支援</span>
+        <% end %>
+
+        <nav aria-label="メインメニュー" class="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
+          <%= link_to "事業所をさがす", facilities_path %>
+          <% if current_user %>
+            <%= link_to "お気に入り", favorites_path %>
+            <%= link_to "掲載情報の管理", admin_facilities_path if current_user.staff? %>
+            <%= button_to "ログアウト", session_path, method: :delete, class: "text-brand-700 hover:underline", form_class: "inline" %>
+          <% else %>
+            <%= link_to "ログイン", new_session_path %>
+            <%= link_to "新規登録", new_registration_path, class: "btn-primary py-1.5" %>
+          <% end %>
+        </nav>
+      </div>
+    </header>
+
+    <%= render "shared/flash" %>
+
+    <main id="main" class="mx-auto w-full max-w-6xl flex-1 px-4 py-6">
+      <%= yield %>
+    </main>
+
+    <footer class="border-t border-stone-200 bg-white">
+      <div class="mx-auto max-w-6xl space-y-1 px-4 py-5 text-xs text-stone-600">
+        <p>
+          <%= OpenData::Wamnet::ATTRIBUTION %>
+          <%= link_to "データと利用条件について", about_path %>
+        </p>
+        <p>掲載内容は公表時点の情報です。利用の前に、必ず事業所や市区町村の窓口にご確認ください。</p>
+      </div>
+    </footer>
   </body>
 </html>
