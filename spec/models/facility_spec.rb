@@ -34,6 +34,12 @@ RSpec.describe Facility do
     end
   end
 
+  it "取り込み済みの URL が不正でも、ほかの項目は保存できる" do
+    facility = create(:facility)
+    facility.update_column(:website_url, "www.example.com")
+    expect(facility.update(description: "紹介文")).to be true
+  end
+
   describe "営業曜日" do
     it "利用時間帯の有無から営業曜日を決める" do
       facility = create(:facility, :saturday, hours_sunday: nil)
