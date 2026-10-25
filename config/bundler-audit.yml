@@ -1,5 +1,7 @@
-# Audit all gems listed in the Gemfile for known security problems by running bin/bundler-audit.
-# CVEs that are not relevant to the application can be enumerated on the ignore list below.
+# bin/bundler-audit で既知の脆弱性を確認する。無視する項目は理由と見直し日を書く。
 
 ignore:
-  - CVE-THAT-DOES-NOT-APPLY
+  # crass 1.0.7: CSS サニタイザーのすり抜け（GHSA-pq4g-8rxf-4g29、1.0.8 で修正）。
+  # 修正版の公開は 2026-10-21 で、依存は公開から 7 日たった版だけを入れる方針のため 2026-10-28 に上げる。
+  # このアプリは利用者の入力した HTML/CSS を sanitize で通しておらず（出力はすべてエスケープ）、影響する経路はない。
+  - GHSA-pq4g-8rxf-4g29
