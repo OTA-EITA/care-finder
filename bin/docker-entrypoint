@@ -1,7 +1,9 @@
 #!/bin/bash -e
 
-# If running the rails server then create or migrate existing database
-if [ "${@: -2:1}" == "./bin/rails" ] && [ "${@: -1:1}" == "server" ]; then
+# マイグレーションは ECS の単発タスク（bin/rails db:migrate）で流し、Web タスクの起動時には走らせない。
+# 複数タスクが同時に起動したときにマイグレーションが競合しないようにするため。
+# docker run で手元確認するときだけ DB_PREPARE_ON_BOOT=1 を付ける。
+if [ "${DB_PREPARE_ON_BOOT:-0}" = "1" ] && [ "${@: -2:1}" == "./bin/rails" ] && [ "${@: -1:1}" == "server" ]; then
   ./bin/rails db:prepare
 fi
 
