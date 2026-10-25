@@ -26,7 +26,7 @@ export async function mountIslands(scope: ParentNode = document): Promise<void> 
   const targets = elements.filter((el) => !el.dataset.reactMounted && registry[el.dataset.reactIsland ?? ""]);
   if (targets.length === 0) return;
 
-  const [{ createRoot }, { createElement }] = await Promise.all([import("react-dom/client"), import("react")]);
+  const { createRoot, createElement } = await import("./react_runtime");
 
   for (const element of targets) {
     const load = registry[element.dataset.reactIsland ?? ""];
