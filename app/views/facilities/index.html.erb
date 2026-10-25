@@ -2,10 +2,14 @@
 
 <div class="grid gap-6 md:grid-cols-[18rem_1fr]">
   <aside class="md:sticky md:top-4 md:self-start">
-    <div class="card">
-      <h2 class="mb-3 text-sm font-bold text-stone-700">条件で絞り込む</h2>
-      <div data-react-island="SearchFilterPanel" data-props="<%= search_filter_props(@criteria, @result, @features).to_json %>">
-        <%= render "facilities/filters", criteria: @criteria, result: @result %>
+    <div class="card" data-controller="disclosure">
+      <h2 class="mb-3 hidden text-sm font-bold text-stone-700 md:block">条件で絞り込む</h2>
+      <button type="button" class="btn-secondary w-full md:hidden" aria-expanded="false" aria-controls="search-filters"
+              data-disclosure-target="button" data-action="disclosure#toggle">絞り込み条件を開く</button>
+      <div id="search-filters" class="hidden pt-4 md:block md:pt-0" data-disclosure-target="panel">
+        <div data-react-island="SearchFilterPanel" data-props="<%= search_filter_props(@criteria, @result, @features).to_json %>">
+          <%= render "facilities/filters", criteria: @criteria, result: @result %>
+        </div>
       </div>
     </div>
   </aside>
