@@ -18,6 +18,10 @@ RSpec.describe Search::TextNormalizer do
       expect(described_class.normalize("  帯広　 放課後  ")).to eq("帯広 放課後")
     end
 
+    it "住所に混じる各種ダッシュをハイフンにそろえ、長音記号は残す" do
+      expect(described_class.normalize("西1条南1丁目1−1 ２‐３ サーカス")).to eq("西1条南1丁目1-1 2-3 サーカス")
+    end
+
     it "nil は空文字にする" do
       expect(described_class.normalize(nil)).to eq("")
     end
