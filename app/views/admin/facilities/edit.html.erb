@@ -1,0 +1,45 @@
+<% content_for :title, "#{@facility.name} の編集" %>
+
+<p class="text-sm"><%= link_to "← 掲載情報の管理", admin_facilities_path %></p>
+<h1 class="mt-2 text-xl font-bold"><%= @facility.name %></h1>
+<p class="text-sm text-stone-600"><%= @facility.full_address %></p>
+
+<%= form_with model: @facility, url: admin_facility_path(@facility), class: "card mt-4 max-w-2xl space-y-5" do |f| %>
+  <%= render "shared/form_errors", record: @facility %>
+
+  <div data-controller="character-counter" data-character-counter-max-value="2000">
+    <%= f.label :description, "紹介文", class: "label" %>
+    <%= f.text_area :description, rows: 8, class: "input", data: { character_counter_target: "input", action: "input->character-counter#update" } %>
+    <p class="mt-1 text-xs text-stone-500" data-character-counter-target="output" aria-live="polite"></p>
+  </div>
+
+  <fieldset>
+    <legend class="label">送迎</legend>
+    <div class="flex flex-wrap gap-4 text-sm">
+      <% [ [ "true", "あり" ], [ "false", "なし" ], [ "", "未登録" ] ].each do |value, label| %>
+        <label class="flex items-center gap-2">
+          <%= f.radio_button :pickup_available, value, checked: @facility.pickup_available.to_s == value %>
+          <%= label %>
+        </label>
+      <% end %>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend class="label">支援内容</legend>
+    <%= hidden_field_tag "facility[feature_ids][]", "" %>
+    <div class="grid gap-1 sm:grid-cols-2">
+      <% @features.each do |feature| %>
+        <label class="flex items-center gap-2 text-sm">
+          <%= check_box_tag "facility[feature_ids][]", feature.id, @facility.feature_ids.include?(feature.id), id: "feature_#{feature.id}" %>
+          <%= feature.name %>
+        </label>
+      <% end %>
+    </div>
+  </fieldset>
+
+  <div class="flex gap-2">
+    <%= f.submit "保存する", class: "btn-primary" %>
+    <%= link_to "公開ページを見る", facility_path(@facility), class: "btn-secondary" %>
+  </div>
+<% end %>

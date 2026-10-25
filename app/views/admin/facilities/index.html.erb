@@ -1,0 +1,20 @@
+<% content_for :title, "掲載情報の管理" %>
+
+<h1 class="text-xl font-bold">掲載情報の管理</h1>
+<p class="mt-1 text-sm text-stone-600">担当している事業所の紹介文・送迎・支援内容を編集できます。名称や住所などはオープンデータの内容を表示しています。</p>
+
+<ul class="mt-4 grid gap-3">
+  <% @facilities.each do |facility| %>
+    <li class="card flex flex-wrap items-center justify-between gap-3">
+      <div>
+        <div class="flex flex-wrap gap-2"><%= render "facilities/badges", facility: %></div>
+        <p class="mt-1 font-bold"><%= facility.name %></p>
+        <p class="text-xs text-stone-600"><%= facility.full_address %></p>
+      </div>
+      <div class="flex gap-2">
+        <%= link_to "公開ページ", facility_path(facility), class: "btn-secondary" %>
+        <%= link_to "編集", edit_admin_facility_path(facility), class: "btn-primary" %>
+      </div>
+    </li>
+  <% end %>
+</ul>
