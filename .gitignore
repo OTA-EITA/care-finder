@@ -48,3 +48,4 @@
 *.tfstate.*
 *.tfplan
 .terraform.tfstate.lock.info
+/vendor/bundle
