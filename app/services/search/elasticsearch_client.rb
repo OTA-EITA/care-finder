@@ -12,7 +12,7 @@ module Search
     }.freeze
     NETWORK_ERRORS = [ SystemCallError, SocketError, Timeout::Error, IOError, OpenSSL::SSL::SSLError ].freeze
 
-    def initialize(url:, open_timeout: 2, read_timeout: 5)
+    def initialize(url:, open_timeout: 2, read_timeout: 10)
       @base = URI(url)
       @open_timeout = open_timeout
       @read_timeout = read_timeout
@@ -27,7 +27,9 @@ module Search
         req.body = body.is_a?(String) ? body : body.to_json
       end
 
-      response = Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == "https",
+      # Net::HTTP は冪等なメソッドを自動で再送するが、索引の作成（PUT）が二重に届くと失敗するので切る。
+      # 再試行はジョブ側（SearchIndexJob の retry_on）で行う
+      response = Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == "https", max_retries: 0,
                                                      open_timeout: @open_timeout, read_timeout: @read_timeout) { |http| http.request(req) }
       status = response.code.to_i
       return nil if ignore.include?(status)
