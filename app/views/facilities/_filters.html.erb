@@ -1,0 +1,35 @@
+<%# JavaScript が無効でも検索できるよう、React の絞り込みパネルと同じ項目をサーバー側でも描く %>
+<%= form_with url: facilities_path, method: :get, scope: nil, role: "search", class: "space-y-4", data: { turbo_action: "advance" } do |f| %>
+  <div>
+    <%= f.label :keyword, "キーワード", class: "label" %>
+    <%= f.search_field :keyword, value: criteria.keyword, class: "input", maxlength: 100 %>
+  </div>
+  <div>
+    <%= f.label :near, "駅・住所から近い順", class: "label" %>
+    <%= f.text_field :near, value: criteria.near, class: "input", maxlength: 50 %>
+  </div>
+  <fieldset>
+    <legend class="label">サービス種別</legend>
+    <% service_type_options.each do |option| %>
+      <label class="flex items-center gap-2 text-sm">
+        <%= check_box_tag "service_types[]", option[:value], criteria.service_types.include?(option[:value]), id: "fallback_service_type_#{option[:value]}" %>
+        <%= option[:label] %> (<%= result.facets[:service_types].fetch(option[:value], 0) %>)
+      </label>
+    <% end %>
+  </fieldset>
+  <div>
+    <%= f.label :prefecture, "都道府県", class: "label" %>
+    <%= f.select :prefecture, options_for_select(result.facets[:prefectures].keys.sort, criteria.prefecture), { include_blank: "すべて" }, class: "input" %>
+  </div>
+  <fieldset>
+    <legend class="label">利用できる日・送迎</legend>
+    <label class="flex items-center gap-2 text-sm"><%= check_box_tag :open_saturday, "1", criteria.open_saturday %> 土曜に利用できる</label>
+    <label class="flex items-center gap-2 text-sm"><%= check_box_tag :open_sunday_or_holiday, "1", criteria.open_sunday_or_holiday %> 日曜・祝日に利用できる</label>
+    <label class="flex items-center gap-2 text-sm"><%= check_box_tag :pickup, "1", criteria.pickup %> 送迎あり</label>
+  </fieldset>
+  <div>
+    <%= f.label :sort, "並び順", class: "label" %>
+    <%= f.select :sort, options_for_select([ [ "おすすめ順", "relevance" ], [ "近い順", "distance" ], [ "名前順", "name" ] ], criteria.sort), {}, class: "input" %>
+  </div>
+  <%= f.submit "この条件で探す", class: "btn-primary w-full", name: nil %>
+<% end %>
