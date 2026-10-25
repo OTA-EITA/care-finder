@@ -3,8 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "esbuild app/javascript/application.ts --bundle --sourcemap --format=esm --splitting --chunk-names=[name]-[hash].digested --outdir=app/assets/builds --public-path=/assets --minify --define:process.env.NODE_ENV=\\\"production\\\"",
-    "build:dev": "esbuild app/javascript/application.ts --bundle --sourcemap --format=esm --splitting --chunk-names=[name]-[hash].digested --outdir=app/assets/builds --public-path=/assets",
+    "build": "rm -f app/assets/builds/*.digested.js app/assets/builds/*.digested.js.map && esbuild app/javascript/application.ts --bundle --sourcemap --format=esm --splitting --chunk-names=[name]-[hash].digested --outdir=app/assets/builds --public-path=/assets --minify --define:process.env.NODE_ENV=\\\"production\\\"",
+    "build:dev": "rm -f app/assets/builds/*.digested.js app/assets/builds/*.digested.js.map && esbuild app/javascript/application.ts --bundle --sourcemap --format=esm --splitting --chunk-names=[name]-[hash].digested --outdir=app/assets/builds --public-path=/assets",
     "build:css": "tailwindcss -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css --minify",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
