@@ -1,0 +1,4 @@
+web: bin/rails server -p ${PORT:-3000}
+js: npm run build:dev -- --watch
+css: npm run build:css -- --watch
+jobs: bin/jobs
