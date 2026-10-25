@@ -1,0 +1,106 @@
+<% content_for :title, @facility.name %>
+
+<p class="text-sm"><%= link_to "← 事業所をさがす", facilities_path %></p>
+
+<div class="mt-3 grid gap-6 lg:grid-cols-[1fr_20rem]">
+  <article class="space-y-6">
+    <header class="card">
+      <div class="flex flex-wrap items-center gap-2"><%= render "facilities/badges", facility: @facility %></div>
+      <h1 class="mt-2 text-2xl font-bold"><%= @facility.name %></h1>
+      <% if @facility.corporation_name %>
+        <p class="mt-1 text-sm text-stone-600">運営：<%= @facility.corporation_name %></p>
+      <% end %>
+      <div class="mt-4"><%= render "favorites/button", facility: @facility %></div>
+    </header>
+
+    <section class="card" aria-labelledby="basic-heading">
+      <h2 id="basic-heading" class="text-lg font-bold">基本情報</h2>
+      <dl class="mt-3 grid grid-cols-[7rem_1fr] gap-x-4 gap-y-2 text-sm">
+        <dt class="text-stone-500">住所</dt>
+        <dd>
+          <%= @facility.full_address %>
+          <% if (map_url = openstreetmap_url(@facility)) %>
+            <%= link_to "地図で見る", map_url, target: "_blank", rel: "noopener noreferrer", class: "ml-2" %>
+          <% end %>
+        </dd>
+        <% if @facility.phone %>
+          <dt class="text-stone-500">電話</dt>
+          <dd><%= @facility.phone %></dd>
+        <% end %>
+        <% if @facility.website_url %>
+          <dt class="text-stone-500">ホームページ</dt>
+          <dd class="break-all"><%= link_to @facility.website_url, @facility.website_url, target: "_blank", rel: "noopener noreferrer nofollow" %></dd>
+        <% end %>
+        <dt class="text-stone-500">定員</dt>
+        <dd><%= @facility.capacity ? "#{@facility.capacity}名" : "情報なし" %></dd>
+        <dt class="text-stone-500">送迎</dt>
+        <dd><%= pickup_label(@facility) %></dd>
+        <% if @facility.office_number %>
+          <dt class="text-stone-500">事業所番号</dt>
+          <dd><%= @facility.office_number %></dd>
+        <% end %>
+      </dl>
+    </section>
+
+    <section class="card" aria-labelledby="hours-heading">
+      <h2 id="hours-heading" class="text-lg font-bold">利用できる時間帯</h2>
+      <table class="mt-3 w-full text-left text-sm">
+        <tbody class="divide-y divide-stone-100">
+          <% { "平日" => @facility.hours_weekday, "土曜" => @facility.hours_saturday, "日曜" => @facility.hours_sunday, "祝日" => @facility.hours_holiday }.each do |day, hours| %>
+            <tr>
+              <th scope="row" class="w-24 py-1.5 font-normal text-stone-500"><%= day %></th>
+              <td class="py-1.5"><%= hours || "—" %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <% if @facility.closed_days %>
+        <p class="mt-3 text-sm"><span class="text-stone-500">定休日：</span><%= @facility.closed_days %></p>
+      <% end %>
+      <% if @facility.availability_notes %>
+        <p class="mt-2 whitespace-pre-line text-sm"><span class="text-stone-500">留意事項：</span><%= @facility.availability_notes %></p>
+      <% end %>
+    </section>
+
+    <% if @facility.description.present? || @facility.features.any? %>
+      <section class="card" aria-labelledby="intro-heading">
+        <h2 id="intro-heading" class="text-lg font-bold">事業所からの紹介</h2>
+        <% if @facility.features.any? %>
+          <ul class="mt-3 flex flex-wrap gap-1" aria-label="支援内容">
+            <% @facility.features.each do |feature| %>
+              <li class="badge bg-stone-100 text-stone-700"><%= feature.name %></li>
+            <% end %>
+          </ul>
+        <% end %>
+        <% if @facility.description.present? %>
+          <p class="mt-3 whitespace-pre-line text-sm leading-relaxed"><%= @facility.description %></p>
+        <% end %>
+        <p class="mt-3 text-xs text-stone-500">この欄は事業所の職員が入力した内容です。</p>
+      </section>
+    <% end %>
+
+    <p class="rounded-md bg-stone-100 px-4 py-3 text-xs text-stone-600"><%= data_source_note(@facility) %></p>
+  </article>
+
+  <aside aria-labelledby="similar-heading">
+    <h2 id="similar-heading" class="text-lg font-bold">似ている事業所</h2>
+    <p class="mt-1 text-xs text-stone-500">サービス種別・距離（10km 以内）・支援内容・土日祝の利用・送迎の重なりから選んでいます。</p>
+    <% if @recommendations.empty? %>
+      <p class="card mt-3 text-sm text-stone-600">近くに似ている事業所が見つかりませんでした。</p>
+    <% else %>
+      <ol class="mt-3 space-y-3">
+        <% @recommendations.each do |rec| %>
+          <li class="card" data-testid="recommendation">
+            <%= link_to rec.facility.name, facility_path(rec.facility), class: "font-bold" %>
+            <p class="mt-1 text-xs text-stone-600"><%= rec.facility.service_type_label %>・<%= rec.facility.municipality %></p>
+            <ul class="mt-2 flex flex-wrap gap-1" aria-label="おすすめの理由">
+              <% rec.reasons.each do |reason| %>
+                <li class="badge bg-brand-50 text-brand-800"><%= reason %></li>
+              <% end %>
+            </ul>
+          </li>
+        <% end %>
+      </ol>
+    <% end %>
+  </aside>
+</div>
