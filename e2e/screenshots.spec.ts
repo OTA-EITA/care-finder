@@ -1,6 +1,7 @@
 import { expect, test } from "@playwright/test";
 
-// README 用のスクリーンショットを撮る。開発環境（オープンデータ取り込み済み + シード）に向けて手動で流す:
+// README 用のスクリーンショットを撮る。実在の事業所が写らないよう、シード（サンプルデータ（架空））だけを入れた
+// 開発環境に向けて手動で流す（open_data:import はしない）:
 //   E2E_BASE_URL=http://127.0.0.1:3000 npx playwright test --project screenshots
 test.skip(!process.env.E2E_BASE_URL, "開発サーバーに向けたときだけ撮る");
 
@@ -12,9 +13,9 @@ test("検索画面", async ({ page }) => {
   await page.screenshot({ path: out("search"), type: "webp", quality: 80 });
 });
 
-test("詳細画面（オープンデータの事業所）", async ({ page }) => {
+test("詳細画面（サンプル事業所）", async ({ page }) => {
   await page.goto("/facilities?prefecture=北海道&municipality=帯広市&near=帯広駅&sort=distance&service_types[]=houkago_day&open_saturday=1");
-  const card = page.getByTestId("facility-card").filter({ hasNotText: "サンプルデータ" }).first();
+  const card = page.getByTestId("facility-card").filter({ hasText: "サンプル ひまわり教室（架空）" });
   await card.getByRole("link").first().click();
   await expect(page.getByRole("heading", { name: "似ている事業所" })).toBeVisible();
   await page.screenshot({ path: out("detail"), type: "webp", quality: 80, fullPage: true });
