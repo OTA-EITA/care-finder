@@ -33,10 +33,17 @@ module CareFinder
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     #
-    # config.time_zone = "Central Time (US & Canada)"
-    # config.eager_load_paths << Rails.root.join("extras")
+    config.time_zone = "Tokyo"
+    config.i18n.default_locale = :ja
+    config.i18n.available_locales = %i[ja en]
 
-    # Don't generate system test files.
-    config.generators.system_tests = nil
+    # FULLTEXT インデックスの WITH PARSER ngram は schema.rb に残らないため structure.sql で管理する
+    config.active_record.schema_format = :sql
+
+    config.generators do |g|
+      g.system_tests = nil
+      g.test_framework :rspec
+      g.helper false
+    end
   end
 end
