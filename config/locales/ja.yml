@@ -1,0 +1,41 @@
+ja:
+  activerecord:
+    models:
+      user: ユーザー
+      facility: 事業所
+      favorite: お気に入り
+      feature: 支援内容
+    attributes:
+      user:
+        email_address: メールアドレス
+        password: パスワード
+        password_confirmation: パスワード（確認）
+      facility:
+        name: 事業所名
+        description: 紹介文
+        pickup_available: 送迎
+        website_url: ホームページ
+        capacity: 定員
+        features: 支援内容
+  errors:
+    format: "%{attribute}%{message}"
+    messages:
+      blank: を入力してください
+      taken: はすでに使われています
+      invalid: の形式が正しくありません
+      inclusion: は一覧にありません
+      confirmation: が一致しません
+      too_long: は%{count}文字以内で入力してください
+      too_short: は%{count}文字以上で入力してください
+      not_a_number: は数値で入力してください
+      not_an_integer: は整数で入力してください
+      greater_than: は%{count}より大きい値にしてください
+      in: は%{count}の範囲で入力してください
+      required: を入力してください
+  date:
+    formats:
+      default: "%Y/%m/%d"
+      long: "%Y年%-m月%-d日"
+  time:
+    formats:
+      default: "%Y/%m/%d %H:%M"
