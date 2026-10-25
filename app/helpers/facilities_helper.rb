@@ -22,6 +22,14 @@ module FacilitiesHelper
     end
   end
 
+  # 外部リンクは http(s) のときだけ出す（javascript: などを href に入れない）
+  def external_url(url)
+    uri = URI.parse(url.to_s)
+    uri.to_s if uri.is_a?(URI::HTTP) && uri.host.present?
+  rescue URI::InvalidURIError
+    nil
+  end
+
   def openstreetmap_url(facility)
     point = facility.point or return nil
     lat = point.latitude.round(6)

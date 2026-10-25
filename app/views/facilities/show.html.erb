@@ -27,9 +27,9 @@
           <dt class="text-stone-500">電話</dt>
           <dd><%= @facility.phone %></dd>
         <% end %>
-        <% if @facility.website_url %>
+        <% if (website = external_url(@facility.website_url)) %>
           <dt class="text-stone-500">ホームページ</dt>
-          <dd class="break-all"><%= link_to @facility.website_url, @facility.website_url, target: "_blank", rel: "noopener noreferrer nofollow" %></dd>
+          <dd class="break-all"><%= link_to website, website, target: "_blank", rel: "noopener noreferrer nofollow" %></dd>
         <% end %>
         <dt class="text-stone-500">定員</dt>
         <dd><%= @facility.capacity ? "#{@facility.capacity}名" : "情報なし" %></dd>
