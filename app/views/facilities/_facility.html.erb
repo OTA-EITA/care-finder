@@ -1,0 +1,23 @@
+<%# locals: (facility:, distance: nil, origin: nil) %>
+<article class="card" data-testid="facility-card">
+  <div class="flex flex-wrap items-center gap-2"><%= render "facilities/badges", facility: %></div>
+  <h3 class="mt-2 text-base font-bold">
+    <%= link_to facility.name, facility_path(facility) %>
+  </h3>
+  <p class="mt-1 text-sm text-stone-600"><%= facility.full_address %></p>
+  <% if distance %>
+    <p class="mt-1 text-sm font-medium text-stone-700"><%= origin.label %>から<%= distance_label(distance) %></p>
+  <% end %>
+  <dl class="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-stone-600">
+    <div><dt class="inline">利用できる日：</dt><dd class="inline"><%= facility.open_day_labels.presence&.join("・") || "情報なし" %></dd></div>
+    <div><dt class="inline">定員：</dt><dd class="inline"><%= facility.capacity ? "#{facility.capacity}名" : "情報なし" %></dd></div>
+    <div><dt class="inline">送迎：</dt><dd class="inline"><%= pickup_label(facility) %></dd></div>
+  </dl>
+  <% if facility.features.any? %>
+    <ul class="mt-2 flex flex-wrap gap-1" aria-label="支援内容">
+      <% facility.features.each do |feature| %>
+        <li class="badge bg-stone-100 text-stone-700"><%= feature.name %></li>
+      <% end %>
+    </ul>
+  <% end %>
+</article>
