@@ -1,9 +1,17 @@
-<h1>Update your password</h1>
+<% content_for :title, "新しいパスワード" %>
 
-<%= tag.div(flash[:alert], style: "color:red") if flash[:alert] %>
+<div class="mx-auto max-w-md">
+  <h1 class="text-xl font-bold">新しいパスワード</h1>
 
-<%= form_with url: password_path(params[:token]), method: :put do |form| %>
-  <%= form.password_field :password, required: true, autocomplete: "new-password", placeholder: "Enter new password", maxlength: 72 %><br>
-  <%= form.password_field :password_confirmation, required: true, autocomplete: "new-password", placeholder: "Repeat new password", maxlength: 72 %><br>
-  <%= form.submit "Save" %>
-<% end %>
+  <%= form_with url: password_path(params[:token]), method: :put, class: "card mt-4 space-y-4" do |form| %>
+    <div>
+      <%= form.label :password, "新しいパスワード（12文字以上）", class: "label" %>
+      <%= form.password_field :password, required: true, autocomplete: "new-password", minlength: 12, maxlength: 72, class: "input" %>
+    </div>
+    <div>
+      <%= form.label :password_confirmation, "確認のためもう一度", class: "label" %>
+      <%= form.password_field :password_confirmation, required: true, autocomplete: "new-password", maxlength: 72, class: "input" %>
+    </div>
+    <%= form.submit "再設定する", class: "btn-primary w-full" %>
+  <% end %>
+</div>
