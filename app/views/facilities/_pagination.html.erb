@@ -1,0 +1,15 @@
+<% if result.total_pages > 1 %>
+  <nav aria-label="ページ送り" class="mt-6 flex items-center justify-between text-sm">
+    <% if result.prev_page %>
+      <%= link_to "← 前の#{result.per_page}件", facilities_path(criteria.to_query(page: result.prev_page == 1 ? nil : result.prev_page)), class: "btn-secondary", rel: "prev" %>
+    <% else %>
+      <span></span>
+    <% end %>
+    <span class="text-stone-600"><%= result.page %> / <%= result.total_pages %> ページ</span>
+    <% if result.next_page %>
+      <%= link_to "次の#{result.per_page}件 →", facilities_path(criteria.to_query(page: result.next_page)), class: "btn-secondary", rel: "next" %>
+    <% else %>
+      <span></span>
+    <% end %>
+  </nav>
+<% end %>
