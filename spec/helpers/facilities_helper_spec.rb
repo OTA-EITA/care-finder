@@ -16,6 +16,16 @@ RSpec.describe FacilitiesHelper do
     end
   end
 
+  describe "#external_url" do
+    it "http(s) の URL だけを返す" do
+      expect(helper.external_url("https://example.com/a")).to eq("https://example.com/a")
+      expect(helper.external_url("javascript:alert(1)")).to be_nil
+      expect(helper.external_url("http://")).to be_nil
+      expect(helper.external_url("http://exa mple.com")).to be_nil
+      expect(helper.external_url(nil)).to be_nil
+    end
+  end
+
   describe "#data_source_note" do
     it "オープンデータは時点を、サンプルは架空である旨を出す" do
       expect(helper.data_source_note(build(:facility, :wamnet))).to include("2026年3月31日時点")
