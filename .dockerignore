@@ -39,3 +39,12 @@
 # Ignore Docker-related files
 /.dockerignore
 /Dockerfile*
+
+# Local dependencies, test output and infrastructure code are not part of the image
+/vendor/bundle
+/coverage
+/storybook-static
+/playwright-report
+/test-results
+/infra
+/docs
