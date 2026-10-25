@@ -12,8 +12,12 @@ module CommittedData
 end
 
 RSpec.configure do |config|
+  # 途中で落ちた実行の残りがあっても、毎回空のテーブルから始める
+  config.before(:suite) { CommittedData.clean! }
   config.define_derived_metadata(type: :system) { |meta| meta[:committed_data] = true }
 
+  # グループ単位で付ける（例ごとに付けると、同じグループの他の例までトランザクションなしになるため）
   config.before(:context, :committed_data) { self.class.use_transactional_tests = false }
+  config.after(:context, :committed_data) { self.class.use_transactional_tests = true }
   config.after(:each, :committed_data) { CommittedData.clean! }
 end
