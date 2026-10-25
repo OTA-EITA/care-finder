@@ -1,0 +1,23 @@
+# 「駅から近い順」の起点に使う駅の代表点。
+# 座標は駅舎付近の概算値（小数4桁 ≒ 10m 単位）で、出口や路線ごとの違いは扱わない。
+# 住所での検索は Geocoding::GsiAddressSearch（国土地理院 住所検索API、GEOCODER_GSI_ENABLED=1）で行う。
+- { name: 帯広駅, prefecture: 北海道, latitude: 42.9176, longitude: 143.2042 }
+- { name: 札幌駅, prefecture: 北海道, latitude: 43.0686, longitude: 141.3507 }
+- { name: 大通駅, prefecture: 北海道, latitude: 43.0606, longitude: 141.3546 }
+- { name: 新札幌駅, prefecture: 北海道, latitude: 43.0391, longitude: 141.4744 }
+- { name: 旭川駅, prefecture: 北海道, latitude: 43.7628, longitude: 142.3582 }
+- { name: 函館駅, prefecture: 北海道, latitude: 41.7737, longitude: 140.7266 }
+- { name: 釧路駅, prefecture: 北海道, latitude: 42.9905, longitude: 144.3822 }
+- { name: 苫小牧駅, prefecture: 北海道, latitude: 42.6380, longitude: 141.6040 }
+- { name: 小樽駅, prefecture: 北海道, latitude: 43.1979, longitude: 140.9935 }
+- { name: 大阪駅, prefecture: 大阪府, latitude: 34.7025, longitude: 135.4959 }
+- { name: 新大阪駅, prefecture: 大阪府, latitude: 34.7334, longitude: 135.5001 }
+- { name: 天王寺駅, prefecture: 大阪府, latitude: 34.6466, longitude: 135.5141 }
+- { name: 難波駅, prefecture: 大阪府, latitude: 34.6629, longitude: 135.5013 }
+- { name: 京橋駅, prefecture: 大阪府, latitude: 34.6966, longitude: 135.5343 }
+- { name: 鶴橋駅, prefecture: 大阪府, latitude: 34.6655, longitude: 135.5308 }
+- { name: 玉造駅, prefecture: 大阪府, latitude: 34.6668, longitude: 135.5338 }
+- { name: 堺東駅, prefecture: 大阪府, latitude: 34.5745, longitude: 135.4853 }
+- { name: 豊中駅, prefecture: 大阪府, latitude: 34.7867, longitude: 135.4639 }
+- { name: 高槻駅, prefecture: 大阪府, latitude: 34.8516, longitude: 135.6178 }
+- { name: 布施駅, prefecture: 大阪府, latitude: 34.6643, longitude: 135.5629 }
