@@ -13,7 +13,10 @@ RSpec.describe Search::Backends::Elasticsearch, :committed_data do
 
   after do
     if ENV["ES_URL"]
-      client.request(:delete, "/#{backend.index_alias}_*", ignore: [ 404 ])
+      # ES 8 以降はワイルドカードでの削除を受け付けないので、名前を引いてから 1 つずつ消す
+      client.request(:get, "/_cat/indices/#{backend.index_alias}_*?format=json&h=index").each do |row|
+        client.request(:delete, "/#{row['index']}", ignore: [ 404 ])
+      end
       WebMock.disable_net_connect!(allow_localhost: true)
     end
   end
