@@ -1,0 +1,34 @@
+<% content_for :title, "データと利用条件について" %>
+
+<article class="card mx-auto max-w-3xl space-y-4 text-sm leading-relaxed">
+  <h1 class="text-xl font-bold">データと利用条件について</h1>
+
+  <section>
+    <h2 class="font-bold">掲載している事業所のデータ</h2>
+    <p class="mt-1">
+      事業所の名称・住所・緯度経度・利用できる時間帯・定休日・定員は、独立行政法人福祉医療機構（WAM）が運営する
+      「障害福祉サービス等情報公表システム」のオープンデータ（放課後等デイサービス・児童発達支援、2026年3月末時点）のうち、
+      北海道と大阪府の事業所を取り込んだものです。
+    </p>
+    <p class="mt-1"><%= link_to OpenData::Wamnet::INDEX_URL, OpenData::Wamnet::INDEX_URL, target: "_blank", rel: "noopener noreferrer" %></p>
+    <p class="mt-1">
+      オープンデータは公共データ利用規約（第1.0版）の条件で利用しています。表示用に改行の記号を戻すなどの加工をしており、
+      加工した内容について国や機構が作成したものではありません。
+    </p>
+  </section>
+
+  <section>
+    <h2 class="font-bold">事業所が入力する項目</h2>
+    <p class="mt-1">紹介文・送迎の有無・支援内容は、オープンデータには含まれていません。事業所の職員が管理画面から登録したものだけを表示します。未登録の場合は「未登録」と表示します。</p>
+  </section>
+
+  <section>
+    <h2 class="font-bold">サンプルデータ</h2>
+    <p class="mt-1">動作確認用に「サンプルデータ（架空）」と表示した事業所があります。実在の事業所ではありません。</p>
+  </section>
+
+  <section>
+    <h2 class="font-bold">ご利用にあたって</h2>
+    <p class="mt-1">掲載内容は公表時点のもので、現在と異なる場合があります。利用の前に、事業所やお住まいの市区町村の窓口にご確認ください。口コミや利用者の声は掲載していません。</p>
+  </section>
+</article>
