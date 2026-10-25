@@ -28,6 +28,7 @@ class Facility < ApplicationRecord
 
   before_validation :derive_open_days
   before_save :refresh_search_text
+  after_commit :enqueue_search_index
 
   scope :located, -> { where.not(latitude: nil).where.not(longitude: nil) }
 
@@ -69,6 +70,10 @@ class Facility < ApplicationRecord
 
   def derive_open_days
     assign_attributes(self.class.open_days_from_hours(attributes.symbolize_keys))
+  end
+
+  def enqueue_search_index
+    SearchIndexJob.perform_later(id) if Search.backend.indexes_documents?
   end
 
   def refresh_search_text
