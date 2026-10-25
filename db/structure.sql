@@ -81,6 +81,23 @@ CREATE TABLE `facility_features` (
   CONSTRAINT `fk_rails_47048fce3b` FOREIGN KEY (`feature_id`) REFERENCES `features` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `facility_memberships`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `facility_memberships` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `user_id` bigint NOT NULL,
+  `facility_id` bigint NOT NULL,
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_facility_memberships_on_user_id_and_facility_id` (`user_id`,`facility_id`),
+  KEY `index_facility_memberships_on_user_id` (`user_id`),
+  KEY `index_facility_memberships_on_facility_id` (`facility_id`),
+  CONSTRAINT `fk_rails_da2d7b1870` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `fk_rails_fedd0b3da8` FOREIGN KEY (`facility_id`) REFERENCES `facilities` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `features`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -368,6 +385,7 @@ CREATE TABLE `users` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 INSERT INTO `schema_migrations` (version) VALUES
+('20261025053000'),
 ('20261025052000'),
 ('20261025051000'),
 ('20261025050000'),
