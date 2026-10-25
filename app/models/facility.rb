@@ -23,7 +23,8 @@ class Facility < ApplicationRecord
   validates :longitude, numericality: { in: -180..180 }, allow_nil: true
   validates :capacity, numericality: { only_integer: true, greater_than: 0 }, allow_nil: true
   validates :description, length: { maximum: 2000 }
-  validates :website_url, format: { with: %r{\Ahttps?://[^\s]+\z} }, allow_blank: true
+  # 取り込んだ URL が古い形式でも、職員が別の項目を保存できるよう変更時だけ確かめる
+  validates :website_url, format: { with: %r{\Ahttps?://[^\s]+\z} }, allow_blank: true, if: :website_url_changed?
 
   before_validation :derive_open_days
   before_save :refresh_search_text
