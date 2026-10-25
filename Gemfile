@@ -18,15 +18,23 @@ gem "stimulus-rails"
 gem "cssbundling-rails"
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
-# gem "bcrypt", "~> 3.1.7"
+gem "bcrypt", "~> 3.1.7"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 
 # Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
-gem "solid_cache"
+# Jobs run on Solid Queue (same Aurora cluster); Rails.cache uses Redis in production. See docs/adr/0003.
 gem "solid_queue"
-gem "solid_cable"
+gem "redis", "~> 5.4"
+
+# One JSON line per request for CloudWatch Logs / Datadog
+gem "lograge"
+
+# Tracing is opt-in (OTEL_ENABLED=1); the Datadog Agent accepts OTLP. See config/initializers/opentelemetry.rb
+gem "opentelemetry-sdk", require: false
+gem "opentelemetry-exporter-otlp", require: false
+gem "opentelemetry-instrumentation-rails", require: false
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
@@ -43,6 +51,16 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+
+  gem "rspec-rails"
+  gem "factory_bot_rails"
+end
+
+group :test do
+  gem "capybara"
+  gem "cuprite"
+  gem "simplecov", require: false
+  gem "webmock"
 end
 
 group :development do
