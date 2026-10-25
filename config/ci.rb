@@ -1,20 +1,18 @@
-# Run using bin/ci
+# bin/ci で GitHub Actions とほぼ同じ検査を手元で流す（MySQL は docker compose up -d で起動しておく）
 
 CI.run do
   step "Setup", "bin/setup --skip-server"
 
   step "Style: Ruby", "bin/rubocop"
+  step "Style: TypeScript", "npm run lint"
+  step "Types: TypeScript", "npm run typecheck"
 
   step "Security: Gem audit", "bin/bundler-audit"
-  step "Security: Yarn vulnerability audit", "yarn audit"
+  step "Security: npm audit", "npm audit --audit-level=high"
   step "Security: Brakeman code analysis", "bin/brakeman --quiet --no-pager --exit-on-warn --exit-on-error"
 
-
-  # Optional: set a green GitHub commit status to unblock PR merge.
-  # Requires the `gh` CLI and `gh extension install basecamp/gh-signoff`.
-  # if success?
-  #   step "Signoff: All systems go. Ready for merge and deploy.", "gh signoff"
-  # else
-  #   failure "Signoff: CI failed. Do not merge or deploy.", "Fix the issues and try again."
-  # end
+  step "Build: JS and CSS", "npm run build && npm run build:css"
+  step "Tests: RSpec", "bundle exec rspec"
+  step "Tests: Jest", "npm test"
+  step "Tests: Playwright", "npx playwright test --project smoke"
 end
