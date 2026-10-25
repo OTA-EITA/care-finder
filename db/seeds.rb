@@ -39,7 +39,28 @@ samples = [
     pickup: true, features: %w[individual medical_care], description: "（サンプルの紹介文です）看護職員がいる時間帯は医療的ケアに対応しています。" },
   { no: "S0007", name: "サンプル なにわ学習ラボ（架空）", kana: "さんぷる なにわがくしゅうらぼ", type: :houkago_day,
     pref: "大阪府", city: "大阪市浪速区", addr: "難波中（架空）", lat: 34.6610, lng: 135.4990, sat: "10:00-16:00",
-    pickup: false, features: %w[study individual], description: nil }
+    pickup: false, features: %w[study individual], description: nil },
+  { no: "S0008", name: "サンプル あおぞらクラブ（架空）", kana: "さんぷる あおぞらくらぶ", type: :houkago_day,
+    pref: "北海道", city: "帯広市", addr: "西2条南9丁目（架空）", lat: 42.9150, lng: 143.2010, sat: "09:30-16:30", hol: "09:30-16:30",
+    pickup: true, features: %w[exercise outing], description: "（サンプルの紹介文です）長い休みには公園や図書館へ出かけます。" },
+  { no: "S0009", name: "サンプル もりのこルーム（架空）", kana: "さんぷる もりのこるーむ", type: :jidou_hattatsu,
+    pref: "北海道", city: "帯広市", addr: "東1条南4丁目（架空）", lat: 42.9215, lng: 143.2080, sat: "10:00-15:00",
+    pickup: false, features: %w[individual music], description: "（サンプルの紹介文です）歌や手遊びを取り入れた個別の時間を用意しています。" },
+  { no: "S0010", name: "サンプル とかち学習スタジオ（架空）", kana: "さんぷる とかちがくしゅうすたじお", type: :houkago_day,
+    pref: "北海道", city: "帯広市", addr: "西5条南12丁目（架空）", lat: 42.9120, lng: 143.1975, sat: "10:00-16:00",
+    pickup: true, features: %w[study sst], description: "（サンプルの紹介文です）宿題のあとに、話し合いやゲームで関わり方を練習します。" },
+  { no: "S0011", name: "サンプル はれのひ教室（架空）", kana: "さんぷる はれのひきょうしつ", type: :houkago_day,
+    pref: "北海道", city: "帯広市", addr: "東4条南8丁目（架空）", lat: 42.9190, lng: 143.2150, hol: "10:00-16:00",
+    pickup: nil, features: %w[exercise music], description: nil },
+  { no: "S0012", name: "サンプル こぐまキッズ（架空）", kana: "さんぷる こぐまきっず", type: :jidou_hattatsu,
+    pref: "北海道", city: "帯広市", addr: "西8条南6丁目（架空）", lat: 42.9230, lng: 143.1930,
+    pickup: true, features: %w[individual severe], description: "（サンプルの紹介文です）重症心身障害のあるお子さんも受け入れています。" },
+  { no: "S0013", name: "サンプル ゆうひが丘スクール（架空）", kana: "さんぷる ゆうひがおかすくーる", type: :houkago_day,
+    pref: "大阪府", city: "大阪市天王寺区", addr: "夕陽丘町（架空）", lat: 34.6550, lng: 135.5110, sat: "10:00-16:00",
+    pickup: true, features: %w[study sst], description: "（サンプルの紹介文です）少人数のグループで学習と会話の練習をしています。" },
+  { no: "S0014", name: "サンプル てらまちキッズラボ（架空）", kana: "さんぷる てらまちきっずらぼ", type: :houkago_day,
+    pref: "大阪府", city: "大阪市天王寺区", addr: "生玉町（架空）", lat: 34.6600, lng: 135.5150, sat: "10:00-17:00", hol: "10:00-17:00",
+    pickup: false, features: %w[exercise music], description: nil }
 ]
 
 samples.each do |s|
